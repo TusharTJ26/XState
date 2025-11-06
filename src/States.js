@@ -13,7 +13,7 @@ export default function States() {
     const fetchCountries = async () => {
       try {
         const response = await fetch(
-          "https://crio-location-selector.onrender.com/countries"
+          "https://location_selector.labs.crio.do/countries"
         );
 
         if (!response.ok) {
@@ -28,36 +28,45 @@ export default function States() {
     fetchCountries();
   }, []);
 
-  const fetchStates = async () => {
-    try {
-      const response = await fetch(
-        `https://crio-location-selector.onrender.com/country=${country}/states`
-      );
-      const data = await response.json();
-      setStateData(data);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  const fetchCity = async () => {
-    try {
-      const response = await fetch(
-        `https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`
-      );
-      const data = await response.json();
-      setCityData(data);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  useEffect(() => {
+    const fetchStates = async () => {
+      // console.log(country);
+      try {
+        const response = await fetch(
+          `https://location_selector.labs.crio.do/country=${country}/states`
+          // `https://location_selector.labs.crio.do/country=India/states`
+        );
+        const data = await response.json();
+        setStateData(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchStates();
+  }, [country]);
+
+  useEffect(() => {
+    const fetchCity = async () => {
+      try {
+        const response = await fetch(
+          ` https://location_selector.labs.crio.do/country=${country}/state=${state}/cities`
+        );
+        const data = await response.json();
+        setCityData(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchCity();
+  }, [state]);
 
   const Country = () => {
     // console.log(country)
     const handleChange = (e) => {
       e.preventDefault();
-      // console.log(e)
+      // console.log(e.target.value);
       setCountry(e.target.value);
-      fetchStates();
+      // fetchStates();
     };
     return (
       <>
@@ -69,8 +78,8 @@ export default function States() {
           <option value="">Select Country</option>
           {countryData.map((data) => {
             return (
-              <option key={data.country_name} value={data.country_name}>
-                {data.country_name}
+              <option key={data} value={data}>
+                {data}
               </option>
             );
           })}
@@ -83,7 +92,7 @@ export default function States() {
   const State = () => {
     const handleStateChange = (e) => {
       setState(e.target.value);
-      fetchCity();
+      // fetchCity();
     };
     return (
       <>
@@ -96,8 +105,8 @@ export default function States() {
           <option value="">Select State</option>
           {stateData.map((data) => {
             return (
-              <option key={data.state_name} value={data.state_name}>
-                {data.state_name}
+              <option key={data} value={data}>
+                {data}
               </option>
             );
           })}
@@ -121,10 +130,10 @@ export default function States() {
           disabled={state === ""}
         >
           <option value="">Select City</option>
-          {countryData.map((data) => {
+          {cityData.map((data) => {
             return (
-              <option key={data.city_name} value={data.city_name}>
-                {data.city_name}
+              <option key={data} value={data}>
+                {data}
               </option>
             );
           })}
@@ -136,13 +145,28 @@ export default function States() {
   };
 
   // console.log(country, state, city);
-  console.log(countryData);
+  // console.log(countryData);
   return (
     <>
       <h1>Select Location</h1>
       <Country />
       <State />
       <City />
+      <br />
+
+      {city != "" ? (
+        <h4>
+          <b>
+            You selected
+            <span style={{ fontSize: "1.3rem" }}> {city}</span>
+          </b>
+          ,
+          <span style={{ color: "grey" }}>
+            {" "}
+            {state}, {country}
+          </span>
+        </h4>
+      ) : null}
     </>
   );
 }
