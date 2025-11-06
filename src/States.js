@@ -76,13 +76,21 @@ export default function States() {
           onChange={handleChange}
         >
           <option value="">Select Country</option>
-          {countryData.map((data) => {
+          {/* {countryData.map((data) => {
             return (
               <option key={data} value={data}>
                 {data}
               </option>
             );
-          })}
+          })} */}
+          {countryData.length > 0
+            ? countryData.map((data) => (
+                <option key={data} value={data}>
+                  {data}
+                </option>
+              ))
+            : null}
+
           {/* <option value="Second">Second</option>
           <option value="Third">Third</option> */}
         </select>
