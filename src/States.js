@@ -75,7 +75,9 @@ export default function States() {
           value={country}
           onChange={handleChange}
         >
-          <option value="">Select Country</option>
+          <option value="" disabled>
+            Select Country
+          </option>
           {/* {countryData.map((data) => {
             return (
               <option key={data} value={data}>
