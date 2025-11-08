@@ -34,7 +34,6 @@ export default function States() {
       try {
         const response = await fetch(
           `https://location-selector.labs.crio.do/country=${country}/states`
-          // `https://location_selector.labs.crio.do/country=India/states`
         );
         const data = await response.json();
         setStateData(data);
