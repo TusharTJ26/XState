@@ -41,7 +41,7 @@ export default function States() {
         console.error(e);
       }
     };
-    if (country != "") {
+    if (country !== "") {
       fetchStates();
     }
   }, [country]);
@@ -58,7 +58,7 @@ export default function States() {
         console.error(e);
       }
     };
-    if (state != "") {
+    if (state !== "") {
       fetchCity();
     }
   }, [state]);
@@ -171,7 +171,7 @@ export default function States() {
       <City />
       <br />
 
-      {city != "" ? (
+      {city !== "" ? (
         <h4>
           <b>
             You selected
