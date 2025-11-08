@@ -13,7 +13,7 @@ export default function States() {
     const fetchCountries = async () => {
       try {
         const response = await fetch(
-          "https://location_selector.labs.crio.do/countries"
+          "https://location-selector.labs.crio.do/countries"
         );
 
         if (!response.ok) {
@@ -33,7 +33,7 @@ export default function States() {
       // console.log(country);
       try {
         const response = await fetch(
-          `https://location_selector.labs.crio.do/country=${country}/states`
+          `https://location-selector.labs.crio.do/country=${country}/states`
           // `https://location_selector.labs.crio.do/country=India/states`
         );
         const data = await response.json();
@@ -49,7 +49,7 @@ export default function States() {
     const fetchCity = async () => {
       try {
         const response = await fetch(
-          ` https://location_selector.labs.crio.do/country=${country}/state=${state}/cities`
+          ` https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
         );
         const data = await response.json();
         setCityData(data);
@@ -112,7 +112,9 @@ export default function States() {
           onChange={handleStateChange}
           disabled={country === ""} // conditional rendenring inside properties
         >
-          <option value="">Select State</option>
+          <option value="" disabled>
+            Select State
+          </option>
           {stateData.map((data) => {
             return (
               <option key={data} value={data}>
@@ -139,7 +141,9 @@ export default function States() {
           onChange={handleCityChange}
           disabled={state === ""}
         >
-          <option value="">Select City</option>
+          <option value="" disabled>
+            Select City
+          </option>
           {cityData.map((data) => {
             return (
               <option key={data} value={data}>
@@ -170,10 +174,8 @@ export default function States() {
             You selected
             <span style={{ fontSize: "1.3rem" }}> {city}</span>
           </b>
-          ,
           <span style={{ color: "grey" }}>
-            {" "}
-            {state}, {country}
+            , {state}, {country}
           </span>
         </h4>
       ) : null}
