@@ -61,7 +61,7 @@ export default function States() {
     if (state !== "") {
       fetchCity();
     }
-  }, [state]);
+  }, [state, country]);
 
   const Country = () => {
     // console.log(country)
