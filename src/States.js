@@ -41,7 +41,9 @@ export default function States() {
         console.error(e);
       }
     };
-    fetchStates();
+    if (country != "") {
+      fetchStates();
+    }
   }, [country]);
 
   useEffect(() => {
@@ -56,7 +58,9 @@ export default function States() {
         console.error(e);
       }
     };
-    fetchCity();
+    if (state != "") {
+      fetchCity();
+    }
   }, [state]);
 
   const Country = () => {
