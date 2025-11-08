@@ -113,7 +113,8 @@ export default function States() {
           style={{ width: "200px" }}
           value={state}
           onChange={handleStateChange}
-          disabled={country === ""} // conditional rendenring inside properties
+          disabled={country === ""}
+          // conditional rendenring inside properties
         >
           <option value="" disabled>
             Select State
