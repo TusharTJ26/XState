@@ -29,7 +29,7 @@ export default function States() {
     const fetchCountries = () => {
       fetch("https://location-selector.labs.crio.do/countries")
         .then((response) => response.json())
-        .then((data) => console.log(data))
+        .then((data) => setCountryData(data))
         .catch((error) => console.error("Error:", error));
     };
     fetchCountries();
