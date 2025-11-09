@@ -107,7 +107,7 @@ export default function States() {
       })
       .then((data) => setCityData(data))
       .catch(() => setCityData([]));
-  }, [state]);
+  }, [state, country]);
 
   const Country = () => {
     // console.log(country)
