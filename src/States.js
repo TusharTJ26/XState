@@ -10,20 +10,27 @@ export default function States() {
   const [cityData, setCityData] = useState([]);
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch(
-          "https://location-selector.labs.crio.do/countries"
-        );
+    // const fetchCountries = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       "https://location-selector.labs.crio.do/countries"
+    //     );
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCountryData(data);
-      } catch (e) {
-        console.error(e);
-      }
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //     const data = await response.json();
+    //     setCountryData(data);
+    //   } catch (e) {
+    //     console.error(e);
+    //   }
+    // };
+
+    const fetchCountries = () => {
+      fetch("https://location-selector.labs.crio.do/countries")
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.error("Error:", error));
     };
     fetchCountries();
   }, []);
