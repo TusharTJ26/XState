@@ -9,66 +9,105 @@ export default function States() {
   const [stateData, setStateData] = useState([]);
   const [cityData, setCityData] = useState([]);
 
+  // useEffect(() => {
+  //   // const fetchCountries = async () => {
+  //   //   try {
+  //   //     const response = await fetch(
+  //   //       "https://location-selector.labs.crio.do/countries"
+  //   //     );
+
+  //   //     if (!response.ok) {
+  //   //       throw new Error(`HTTP error! status: ${response.status}`);
+  //   //     }
+  //   //     const data = await response.json();
+  //   //     setCountryData(data);
+  //   //   } catch (e) {
+  //   //     console.error(e);
+  //   //   }
+  //   // };
+
+  //   const fetchCountries = () => {
+  //     fetch("https://location-selector.labs.crio.do/countries")
+  //       .then((response) => response.json())
+  //       .then((data) => setCountryData(data))
+  //       .catch((error) => console.error("Error:", error));
+  //   };
+  //   fetchCountries();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchStates = async () => {
+  //     // console.log(country);
+  //     try {
+  //       const response = await fetch(
+  //         `https://location-selector.labs.crio.do/country=${country}/states`
+  //       );
+  //       const data = await response.json();
+  //       setStateData(data);
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   };
+  //   if (country !== "") {
+  //     fetchStates();
+  //   }
+  // }, [country]);
+
+  // useEffect(() => {
+  //   const fetchCity = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         ` https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
+  //       );
+  //       const data = await response.json();
+  //       setCityData(data);
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   };
+  //   if (state !== "") {
+  //     fetchCity();
+  //   }
+  // }, [state, country]);
+
+  // Fetch countries
   useEffect(() => {
-    // const fetchCountries = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       "https://location-selector.labs.crio.do/countries"
-    //     );
-
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! status: ${response.status}`);
-    //     }
-    //     const data = await response.json();
-    //     setCountryData(data);
-    //   } catch (e) {
-    //     console.error(e);
-    //   }
-    // };
-
-    const fetchCountries = () => {
-      fetch("https://location-selector.labs.crio.do/countries")
-        .then((response) => response.json())
-        .then((data) => setCountryData(data))
-        .catch((error) => console.error("Error:", error));
-    };
-    fetchCountries();
+    fetch("https://location-selector.labs.crio.do/countries")
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((data) => setCountryData(data))
+      .catch(() => setCountryData([])); // required for error tests
   }, []);
 
+  //  Fetch states
   useEffect(() => {
-    const fetchStates = async () => {
-      // console.log(country);
-      try {
-        const response = await fetch(
-          `https://location-selector.labs.crio.do/country=${country}/states`
-        );
-        const data = await response.json();
-        setStateData(data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    if (country !== "") {
-      fetchStates();
-    }
+    if (!country) return;
+
+    fetch(`https://location-selector.labs.crio.do/country=${country}/states`)
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((data) => setStateData(data))
+      .catch(() => setStateData([]));
   }, [country]);
 
+  //  Fetch cities
   useEffect(() => {
-    const fetchCity = async () => {
-      try {
-        const response = await fetch(
-          ` https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
-        );
-        const data = await response.json();
-        setCityData(data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    if (state !== "") {
-      fetchCity();
-    }
-  }, [state, country]);
+    if (!state) return;
+
+    fetch(
+      `https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((data) => setCityData(data))
+      .catch(() => setCityData([]));
+  }, [state]);
 
   const Country = () => {
     // console.log(country)
