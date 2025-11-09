@@ -72,7 +72,7 @@ export default function States() {
 
   // Fetch countries
   useEffect(() => {
-    fetch("https://location-selector.labs.crio.do/countries")
+    fetch("/countries")
       .then((res) => {
         if (!res.ok) throw new Error();
         return res.json();
@@ -85,7 +85,7 @@ export default function States() {
   useEffect(() => {
     if (!country) return;
 
-    fetch(`https://location-selector.labs.crio.do/country=${country}/states`)
+    fetch(`/states?country=${country}`)
       .then((res) => {
         if (!res.ok) throw new Error();
         return res.json();
@@ -98,9 +98,7 @@ export default function States() {
   useEffect(() => {
     if (!state) return;
 
-    fetch(
-      `https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
-    )
+    fetch(`/cities?state=${state}`)
       .then((res) => {
         if (!res.ok) throw new Error();
         return res.json();
