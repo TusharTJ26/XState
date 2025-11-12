@@ -1,5 +1,5 @@
 import "./App.css";
-import States from "./States";
+// import States from "./States";
 import XStates from "./XStates";
 function App() {
   return (
