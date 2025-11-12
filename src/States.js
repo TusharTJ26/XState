@@ -72,7 +72,7 @@ export default function States() {
         const response = await axios(
           "https://crio-location-selector.onrender.com/countries"
         );
-        setCountry(response.data);
+        setCountryData(response.data);
       } catch (e) {
         console.error("Error in country api", e);
       }
@@ -83,28 +83,28 @@ export default function States() {
     async function getState() {
       try {
         const response = await axios(
-          `https://crio-location-selector.onrender.com/country=${selected.country}/states`
+          `https://crio-location-selector.onrender.com/country=${country}/states`
         );
-        setState(response.data);
+        setStateData(response.data);
       } catch (e) {
         console.error("Error in state api", e);
       }
     }
     getState();
-  }, [selected.country]);
+  }, [country]);
   useEffect(() => {
     async function getState() {
       try {
         const response = await axios(
-          `https://crio-location-selector.onrender.com/country=${selected.country}/state=${selected.state}/cities`
+          `https://crio-location-selector.onrender.com/country=${country}/state=${state}/cities`
         );
-        setCity(response.data);
+        setCityData(response.data);
       } catch (e) {
         console.error("Error in city api", e);
       }
     }
     getState();
-  }, [selected.state]);
+  }, [state, country]);
 
   const Country = () => {
     // console.log(country)
