@@ -1,9 +1,10 @@
 import "./App.css";
 import States from "./States";
+import XStates from "./XStates";
 function App() {
   return (
     <div className="App">
-      <States />
+      <XStates />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
