@@ -9,105 +9,102 @@ export default function States() {
   const [stateData, setStateData] = useState([]);
   const [cityData, setCityData] = useState([]);
 
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch(
-          "https://location-selector.labs.crio.do/countries"
-        );
+  // useEffect(() => {
+  //   const fetchCountries = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://location-selector.labs.crio.do/countries"
+  //       );
+  //       const data = await response.json();
+  //       setCountryData(data);
+  //     } catch (e) {
+  //       console.error("Error in country api", e);
+  //     }
+  //   };
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCountryData(data);
+  //   // const fetchCountries = () => {
+  //   //   fetch("https://location-selector.labs.crio.do/countries")
+  //   //     .then((response) => response.json())
+  //   //     .then((data) => setCountryData(data))
+  //   //     .catch((error) => console.error("Error:", error));
+  //   // };
+  //   fetchCountries();
+  // }, []);
+
+  // useEffect(() => {
+  //   const fetchStates = async () => {
+  //     // console.log(country);
+  //     try {
+  //       const response = await fetch(
+  //         `https://location-selector.labs.crio.do/country=${country}/states`
+  //       );
+  //       const data = await response.json();
+  //       setStateData(data);
+  //     } catch (e) {
+  //       console.error("Error in state api", e);
+  //     }
+  //   };
+  //   if (country !== "") {
+  //     fetchStates();
+  //   }
+  // }, [country]);
+
+  // useEffect(() => {
+  //   const fetchCity = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         ` https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
+  //       );
+  //       const data = await response.json();
+  //       setCityData(data);
+  //     } catch (e) {
+  //       console.error("Error in city api", e);
+  //     }
+  //   };
+  //   if (state !== "") {
+  //     fetchCity();
+  //   }
+  // }, [state, country]);
+
+  useEffect(() => {
+    async function getCountry() {
+      try {
+        const response = await axios(
+          "https://crio-location-selector.onrender.com/countries"
+        );
+        setCountry(response.data);
       } catch (e) {
         console.error("Error in country api", e);
       }
-    };
-
-    // const fetchCountries = () => {
-    //   fetch("https://location-selector.labs.crio.do/countries")
-    //     .then((response) => response.json())
-    //     .then((data) => setCountryData(data))
-    //     .catch((error) => console.error("Error:", error));
-    // };
-    fetchCountries();
+    }
+    getCountry();
   }, []);
-
   useEffect(() => {
-    const fetchStates = async () => {
-      // console.log(country);
+    async function getState() {
       try {
-        const response = await fetch(
-          `https://location-selector.labs.crio.do/country=${country}/states`
+        const response = await axios(
+          `https://crio-location-selector.onrender.com/country=${selected.country}/states`
         );
-        const data = await response.json();
-        setStateData(data);
+        setState(response.data);
       } catch (e) {
         console.error("Error in state api", e);
       }
-    };
-    if (country !== "") {
-      fetchStates();
     }
-  }, [country]);
-
+    getState();
+  }, [selected.country]);
   useEffect(() => {
-    const fetchCity = async () => {
+    async function getState() {
       try {
-        const response = await fetch(
-          ` https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
+        const response = await axios(
+          `https://crio-location-selector.onrender.com/country=${selected.country}/state=${selected.state}/cities`
         );
-        const data = await response.json();
-        setCityData(data);
+        setCity(response.data);
       } catch (e) {
         console.error("Error in city api", e);
       }
-    };
-    if (state !== "") {
-      fetchCity();
     }
-  }, [state, country]);
-
-  // Fetch countries
-  // useEffect(() => {
-  //   fetch("https://location-selector.labs.crio.do/countries")
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error();
-  //       return res.json();
-  //     })
-  //     .then((data) => setCountryData(data))
-  //     .catch((error) => console.error(error));
-  // }, []);
-
-  // //  Fetch states
-  // useEffect(() => {
-  //   if (!country) return;
-
-  //   fetch(`https://location-selector.labs.crio.do/country=${country}/states`)
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error();
-  //       return res.json();
-  //     })
-  //     .then((data) => setStateData(data))
-  //     .catch((error) => console.error(error));
-  // }, [country]);
-
-  // //  Fetch cities
-  // useEffect(() => {
-  //   if (!state) return;
-
-  //   fetch(
-  //     ` https://location-selector.labs.crio.do/country=${country}/state=${state}/cities`
-  //   )
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error();
-  //       return res.json();
-  //     })
-  //     .then((data) => setCityData(data))
-  //     .catch((error) => console.error(error));
-  // }, [state, country]);
+    getState();
+  }, [selected.state]);
 
   const Country = () => {
     // console.log(country)
