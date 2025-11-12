@@ -78,7 +78,7 @@ export default function States() {
         return res.json();
       })
       .then((data) => setCountryData(data))
-      .catch(() => setCountryData([])); // required for error tests
+      .catch((error) => console.error(error));
   }, []);
 
   //  Fetch states
@@ -91,7 +91,7 @@ export default function States() {
         return res.json();
       })
       .then((data) => setStateData(data))
-      .catch(() => setStateData([]));
+      .catch((error) => console.error(error));
   }, [country]);
 
   //  Fetch cities
@@ -106,7 +106,7 @@ export default function States() {
         return res.json();
       })
       .then((data) => setCityData(data))
-      .catch(() => setCityData([]));
+      .catch((error) => console.error(error));
   }, [state, country]);
 
   const Country = () => {
